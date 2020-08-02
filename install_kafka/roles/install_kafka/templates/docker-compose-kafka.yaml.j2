@@ -1,0 +1,20 @@
+version: '3'
+services:
+  kafka1:
+    image: kafka:5.1.0.1
+    environment:
+      - TZ=Asia/Shanghai
+      - KAFKA_ZOOKEEPER_CONNECT={{ kafka_nodes }}
+#      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.200.90:9092
+      - KAFKA_BROKER_ID={{ node_id[0] }}
+      - KAFKA_NUM_PARTITIONS=8
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=2
+    volumes:
+      - /TRS/docker_kafka/kafkadata:/var/lib/kafka/data
+      - /etc/localtime:/etc/localtime
+      - /TRS/docker_kafka/kafkasecrets:/etc/kafka/secrets
+      - /TRS/docker_kafka/kafkalogs:/var/log/kafka-server-logs
+      - /TRS/docker_kafka/kafkaGClogs:/var/log/kafka
+    ports:
+      - "9092:9092"
+    network_mode: "host"

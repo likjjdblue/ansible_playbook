@@ -1,0 +1,6 @@
+- any_errors_fatal: true
+  import_tasks: ssh_connection_test.yaml
+
+- any_errors_fatal: true
+  import_tasks: hardware_test.yaml
+      

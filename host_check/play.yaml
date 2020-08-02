@@ -1,0 +1,7 @@
+---
+- name: "采编服务部署"
+  hosts: proapp
+  roles:
+   -  host_check
+
+      
