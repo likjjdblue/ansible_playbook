@@ -1,0 +1,7 @@
+---
+- hosts: host204
+  vars_files:
+    nmpmedia/nmp/env.yaml
+  tasks:
+    - debug:
+        msg: "{{ DBAdminUser }}"

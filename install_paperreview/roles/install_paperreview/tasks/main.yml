@@ -1,0 +1,85 @@
+- name: "获取当前GROUP 名"
+  run_once: true
+  set_fact:
+      currentGroupName: "{{ hostvars[item].group_names[0] }}"
+  loop: "{{ ansible_play_batch }}"
+- name: "打印组名"
+  run_once: true
+  debug:
+    msg: "当前 group name 是： {{ currentGroupName }}"
+
+- name: "创建相关目录"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /TRS/LOGS/paperreview
+
+- name: '生成docker-compose 文件'
+  copy:
+    src:  "{{ item }}"
+    dest: /TRS/CONFIG/YML
+  with_items:
+    - paperreview.yml
+
+- name: '配置防火墙规则'
+  firewalld:
+    port: 9023/tcp
+    permanent: yes
+    state: enabled
+    immediate: true
+  ignore_errors: true
+
+
+- name: "获取后端 节点信息"
+  run_once: true
+  set_fact:
+    tmp_list: "{{ groups[currentGroupName] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list  }}"
+
+
+
+- name: "合成后端节点信息"
+  run_once: true
+  set_fact:
+    paperreview_nodes: "{{ tmp_list | map('regex_replace', '(.*)', 'server  \\1:9023 max_fails=1  fail_timeout=5s;') | join('\n    ') }}"
+
+- name: "创建nginx conf.d目录"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /etc/nginx/conf.d
+    - /etc/nginx/conf.d/upstream
+
+
+- name: 拷贝paperreview.conf配置文件
+  template:
+    src: "../../../paperreviewmedia/paperreview/paperreview.conf.j2"
+    dest: "/etc/nginx/conf.d/paperreview.conf"
+
+
+- name: 拷贝dpaperreviewupstream.conf配置文件
+  template:
+    src: "../../../paperreviewmedia/paperreview/paperreviewupstream.conf.j2"
+    dest: "/etc/nginx/conf.d/upstream/paperreviewupstream.conf"
+
+
+
+
+- name: 创建临时安装目录
+  file:
+     path: "{{ INSTALL_TMP }}"
+     state: directory
+- name: 拷贝MySQL-python安装包
+  copy:
+     src: ../../../paperreviewmedia/MySQL-python-1.2.5-1.el7.x86_64.rpm
+     dest: "{{ INSTALL_TMP }}"
+- name: rpm包安装MySQL-python
+  yum:
+    name: "{{ INSTALL_TMP }}/MySQL-python-1.2.5-1.el7.x86_64.rpm"
+    state: present
+
+
+
+- debug:
+    msg: "按需导入Docker 镜像 "

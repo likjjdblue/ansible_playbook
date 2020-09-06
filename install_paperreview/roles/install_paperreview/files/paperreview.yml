@@ -1,0 +1,15 @@
+version : '3.7'
+ 
+services:
+  paperreview:
+    container_name: paperreview
+    hostname: paperreview
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/paperreview:$tag_name
+    labels:
+      maintainers: "dengyouxu"
+    network_mode: "host"
+    ports:
+      - 9023:9023
+    volumes:
+      - /TRS/LOGS/paperreview:/TRS/LOGS/paperreview

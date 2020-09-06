@@ -1,0 +1,15 @@
+version : '3.7'
+
+services:
+  transfer_resource_ai:
+    container_name: transfer_resource_ai
+    hostname: transfer_resource_ai
+    restart: always
+    image: tcr.xjzmy.io/zmydev/transfer_resource_ai:$tag_name
+    labels:
+      maintainers: "trs"
+    network_mode: "host"
+    ports:
+      - 58585:58585
+    volumes:
+      - /TRS/LOGS/transfer_resource_ai:/TRS/LOGS/transfer_resource_ai

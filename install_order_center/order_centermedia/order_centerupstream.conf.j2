@@ -1,0 +1,4 @@
+upstream order_center {
+    ip_hash;
+    {{ order_center_nodes }}
+}

@@ -1,0 +1,25 @@
+version: '3'
+services:
+  es1:
+    image: es:5.5.0.2
+    environment:
+      - TZ=Asia/Shanghai
+      - cluster.name=trs-elasticsearch
+      - bootstrap.memory_lock=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+#      - xpack.security.enabled=false
+      - "discovery.zen.ping.unicast.hosts={{ es_nodes }}"
+      - transport.tcp.port=9300
+      - transport.publish_port=9300
+      - transport.publish_host={{ ansible_default_ipv4.address }}
+    ulimits:
+      memlock:
+         soft: -1
+         hard: -1
+    volumes:
+      - /TRS/APP/elasticsearch/data:/usr/share/elasticsearch/data
+      - /etc/localtime:/etc/localtime
+    ports:
+      - 9200:9200
+      - 9300:9300
+    network_mode: 'host' 

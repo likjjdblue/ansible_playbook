@@ -1,0 +1,16 @@
+---
+#- name: "环境检查，安装docker"
+#  hosts: nmp_nginx_group:nmp_backend_group 
+#  roles:
+#   -  host_check
+#   -  system_init
+#   -  install_docker
+#   -  install_compose
+
+- name: '部署"资源智能处理中间件" 后端服务'
+  hosts: ddc
+  vars_files:
+     - transfer_resource_aimedia/env.yaml
+  roles:
+    - install_transfer_resource_ai
+

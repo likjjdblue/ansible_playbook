@@ -1,0 +1,5 @@
+---
+- name: "安装kafka"
+  hosts: proapp
+  roles:
+    - install_es

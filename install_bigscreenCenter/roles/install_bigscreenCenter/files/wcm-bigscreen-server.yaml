@@ -1,0 +1,16 @@
+version : '3.7'
+ 
+services:
+  wcm-bigscreen-server:
+    container_name: wcm-bigscreen-server
+    hostname: wcm-bigscreen-server
+    restart: always
+    image: tcr.xjzmy.io/zmytest/wcm-bigscreen-server:$tag_name
+    labels:
+      maintainers: "liao.peng<liao.peng@trs.com.cn>"
+    network_mode: "host"
+    ports:
+      - 9994:9994
+      - 59994:59994
+    volumes:
+      - /TRS/LOGS/wcm-bigscreen-server:/TRS/LOGS/wcm-bigscreen-server

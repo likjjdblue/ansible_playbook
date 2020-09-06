@@ -1,0 +1,16 @@
+version : '3.7'
+ 
+services:
+  hybase_data_monitor:
+    container_name: hybase_data_monitor
+    hostname: hybase_data_monitor
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/hybase_data_monitor:$tag_name
+    labels:
+      maintainers: "liaopeng<liao.peng@trs.com.cn>"
+    network_mode: "host"
+    ports:
+      - 8776:8776
+    volumes:
+      - /TRS/LOGS/hybase_data_monitor:/TRS/LOGS/hybase_data_monitor
+

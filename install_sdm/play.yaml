@@ -1,0 +1,16 @@
+---
+#- name: "环境检查，安装docker"
+#  hosts: nmp_nginx_group:nmp_backend_group 
+#  roles:
+#   -  host_check
+#   -  system_init
+#   -  install_docker
+#   -  install_compose
+
+- name: '部署"二次打标" 后端服务'
+  hosts: ddc
+  vars_files:
+     - sdmmedia/env.yaml
+  roles:
+    - install_sdm
+

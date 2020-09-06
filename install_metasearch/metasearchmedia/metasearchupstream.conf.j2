@@ -1,0 +1,4 @@
+upstream metasearch {
+    ip_hash;
+    {{ metasearch_nodes }}
+}

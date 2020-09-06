@@ -1,0 +1,4 @@
+upstream trsbigstream {
+    ip_hash;
+    {{ bigstream_nodes }}
+}

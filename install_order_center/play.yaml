@@ -1,0 +1,16 @@
+---
+#- name: "环境检查，安装docker"
+#  hosts: nmp_nginx_group:nmp_backend_group 
+#  roles:
+#   -  host_check
+#   -  system_init
+#   -  install_docker
+#   -  install_compose
+
+- name: '部署"订单中心" 后端服务'
+  hosts: ddc
+  vars_files:
+     - order_centermedia/env.yaml
+  roles:
+    - install_order_center
+

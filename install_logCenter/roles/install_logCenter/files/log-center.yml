@@ -1,0 +1,16 @@
+version : '3.7'
+
+services:
+  log-center:
+    container_name: log-center
+    hostname: log-center
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/log-center:$tag_name
+    labels:
+      maintainers: "liu.zhengwei"
+    network_mode: "bridge"
+    ports:
+      - 8658:8658
+    volumes:
+      - /TRS/LOGS/log-center:/TRS/LOGS/log-center
+    network_mode: "host"

@@ -1,0 +1,156 @@
+version : '3.7'
+ 
+services:
+  sdm-website:
+    container_name: sdm-website
+    hostname: sdm-website
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-website:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-website:/logs
+    network_mode: "host"
+    ports:
+      - 9017:9017
+ 
+  sdm-weibo:
+    container_name: sdm-weibo
+    hostname: sdm-weibo
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-weibo:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-weibo:/logs
+    network_mode: "host"    
+    ports:
+      - 9009:9009
+ 
+  sdm-websitetoutiao:
+    container_name: sdm-websitetoutiao
+    hostname: sdm-websitetoutiao
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-websitetoutiao:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-websitetoutiao:/logs
+    network_mode: "host"
+    ports:
+      - 9004:9004
+ 
+  sdm-push-app:
+    container_name: sdm-push-app
+    hostname: sdm-push-app
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-push-app:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-push-app:/logs
+    network_mode: "host"
+    ports:
+      - 9016:9016
+ 
+  sdm-epaperbm:
+    container_name: sdm-epaperbm
+    hostname: sdm-epaperbm
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-epaperbm:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-epaperbm:/logs
+    network_mode: "host"
+    ports:
+      - 9018:9018
+ 
+  sdm-szboriginal:
+    container_name: sdm-szboriginal
+    hostname: sdm-sszboriginal
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-szboriginal:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-szboriginal:/logs
+    network_mode: "host"
+    ports:
+      - 9000:9000
+ 
+  sdm-feifan-app:
+    container_name: sdm-feifan-app
+    hostname: sdm-feifan-app
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-feifan-app:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-feifan-app:/logs
+    network_mode: "host"
+    ports:
+      - 9015:9015
+ 
+  sdm-traditionalyuqing:
+    container_name: sdm-traditionalyuqing
+    hostname: sdm-traditionalyuqing
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-traditionalyuqing:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-traditionalyuqing:/logs
+    network_mode: "host"
+    ports:
+      - 7911:7911
+ 
+  sdm-weiboyuqing:
+    container_name: sdm-weiboyuqing
+    hostname: sdm-weiboyuqing
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-weiboyuqing:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-weiboyuqing:/logs
+    network_mode: "host"
+    ports:
+      - 7908:7908
+ 
+  sdm-weixinyuqing:
+    container_name: sdm-weixinyuqing
+    hostname: sdm-weixinyuqing
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-weixinyuqing:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-weixinyuqing:/logs
+    network_mode: "host"
+    ports:
+      - 7910:7910
+  sdm-weixin:
+    container_name: sdm-weixin
+    hostname: sdm-weixin
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-weixin:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-weixin:/logs
+    network_mode: "host"
+    ports:
+      - 9010:9010
+  sdm-product:
+    container_name: sdm-product
+    hostname: sdm-product
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/sdm-product:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn.com>"
+    volumes:
+      - /TRS/LOGS/mcb-sdm/sdm-product:/logs
+    network_mode: "host"
+    ports:
+      - 9020:9020

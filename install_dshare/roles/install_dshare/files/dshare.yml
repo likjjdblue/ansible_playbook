@@ -1,0 +1,16 @@
+version : '3.7'
+ 
+services:
+  dshare:
+    container_name: dshare
+    hostname: dshare
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/dshare:$tag_name
+    labels:
+      maintainers: "jiangt.tao"
+    network_mode: "host"
+    ports:
+      - 9014:9014
+    volumes:
+      - /TRS/LOGS/dshare:/TRS/LOGS/dshare
+      - /TRS/DATA/shareData:/TRS/DATA/shareData

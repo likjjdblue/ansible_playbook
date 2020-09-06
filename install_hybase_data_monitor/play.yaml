@@ -1,0 +1,16 @@
+---
+#- name: "环境检查，安装docker"
+#  hosts: nmp_nginx_group:nmp_backend_group 
+#  roles:
+#   -  host_check
+#   -  system_init
+#   -  install_docker
+#   -  install_compose
+
+- name: '部署"海贝数据监控" 后端服务'
+  hosts: ddc
+  vars_files:
+     - hybase_data_monitormedia/env.yaml
+  roles:
+    - install_hybase_data_monitor
+

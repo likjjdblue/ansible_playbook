@@ -1,0 +1,16 @@
+version : '3.7'
+ 
+services:
+  newmediaplatform:
+    container_name: newmediaplatform
+    hostname: newmediaplatform
+    restart: always
+    image: tcr.xjzmy.io/zmytest/newmediaplatform:$tag_name
+    labels:
+      maintainers: "luofan"
+    network_mode: "host"
+    ports:
+      - 9012:9012
+    volumes:
+      - /TRS/LOGS/NewMediaPlatform:/TRS/LOGS/NewMediaPlatform
+      - /TRS/DATA/NewMedia:/TRS/DATA/NewMedia

@@ -77,3 +77,4 @@
 
 - debug:
     msg: "{{ inventory_hostname }}  检测完成，符合标准"
+

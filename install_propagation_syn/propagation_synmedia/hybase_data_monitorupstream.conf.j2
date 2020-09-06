@@ -1,0 +1,5 @@
+upstream HybaseDataMonitor {
+    ip_hash;
+    {{ hybase_data_monitor_nodes }}
+}
+

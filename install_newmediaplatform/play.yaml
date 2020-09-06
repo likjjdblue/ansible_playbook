@@ -1,0 +1,16 @@
+---
+#- name: "环境检查，安装docker"
+#  hosts: nmp_nginx_group:nmp_backend_group 
+#  roles:
+#   -  host_check
+#   -  system_init
+#   -  install_docker
+#   -  install_compose
+
+- name: '部署"新媒体对接平台" 后端服务'
+  hosts: nmp_backend_group
+  vars_files:
+     - nmpmedia/nmp/env.yaml
+  roles:
+    - install_nmp
+

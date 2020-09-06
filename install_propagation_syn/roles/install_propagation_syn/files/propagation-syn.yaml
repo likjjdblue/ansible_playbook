@@ -1,0 +1,17 @@
+version : '3.7'
+ 
+services:
+  propagation-syn:
+    container_name: propagation-syn
+    hostname: propagation-syn
+    restart: always
+    image: registry.xinbeiting.com/xjdev/propagation-syn:$tag_name
+    labels:
+      maintainers: "liuzhengwei<liu.zhenwei@trs.com.cn.com>"
+    network_mode: "host"
+    ports:
+      - 58103:58103
+      - 2111:2111
+      - 2112:2112
+    volumes:
+      - /TRS/LOGS/propagation-syn:/TRS/LOGS/propagation-syn

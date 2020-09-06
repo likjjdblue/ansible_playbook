@@ -1,0 +1,90 @@
+- name: "获取当前GROUP 名"
+  run_once: true
+  set_fact:
+      currentGroupName: "{{ hostvars[item].group_names[0] }}"
+  loop: "{{ ansible_play_batch }}"
+- name: "打印组名"
+  run_once: true
+  debug:
+    msg: "当前 group name 是： {{ currentGroupName }}"
+
+- name: "上传镜像文件至目标服务器"
+  copy:
+    src:  "{{ item }}"
+    dest: /tmp
+  with_items:
+    - es.5.5.0.2.tar.gz
+
+- name: "导入镜像"
+  shell: "docker image load -i {{ item }}"
+  args:
+    chdir: /tmp
+  with_items:
+    - es.5.5.0.2.tar.gz
+
+- name: "创建项目目录"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '777'
+  with_items:
+    - /TRS/APP/elasticsearch/data
+
+- name: "获取elastisearch 节点信息"
+  run_once: true
+  set_fact:
+    tmp_list: "{{ groups[currentGroupName] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list  }}"
+
+- name: "合成elasticsearch节点信息"
+  run_once: true
+  set_fact:
+    es_nodes: "{{ tmp_list | map('regex_replace', '(.*)', '\\1') | join(',') }}"
+
+- name: "生成  docker-compose"
+  template:
+    src: docker-compose-es.yaml.j2
+    dest: /TRS/APP/elasticsearch/docker-compose-es.yaml
+
+- name: '配置防火墙规则'
+  firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: true
+  with_items:
+      - 9200
+      - 9300
+  ignore_errors: true
+
+
+#- name: "获取kafka 节点信息"
+#  run_once: true
+#  set_fact:
+#    tmp_list: "{{ groups[currentGroupName] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list  }}"
+#
+#
+#
+#- name: "合成kafka节点信息"
+#  run_once: true
+#  set_fact:
+#    kafka_nodes: "{{ tmp_list | map('regex_replace', '(.*)', '\\1:2181') | join(';') }}"
+#
+#
+#- name: '获取ID'
+#  set_fact:
+#    node_id: "{{ TmpIndex.0 }}"
+#  with_indexed_items: "{{ groups[currentGroupName] }}"
+#  loop_control:
+#     loop_var: TmpIndex
+#  when: inventory_hostname != groups[currentGroupName][TmpIndex.0]
+#
+#
+#- debug:
+#    msg: 'node ID is: {{ node_id }}'
+#  
+#
+#
+#- name: "生成kafka docker-compose"
+#  template:
+#    src: docker-compose-kafka.yaml.j2
+#    dest: /home/TRS/docker_kafka/docker-compose-kafka.yaml

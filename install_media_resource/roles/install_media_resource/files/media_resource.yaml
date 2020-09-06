@@ -1,0 +1,21 @@
+version : '3.7'
+ 
+services:
+  media_resource:
+    container_name: media_resource
+    hostname: media_resource
+    restart: always
+    image: tcr.xjzmy.io/zmyprod/media_resource:$tag_name
+    labels:
+      maintainers: "wenwen<wen.wen@trs.com.cn>"
+    network_mode: "host"
+    ports:
+      - 52618:52618
+    volumes:
+      - /TRS/LOGS/media_resource:/TRS/LOGS/media_resource
+      - /TRS/DATA/media_resource_data:/TRS/DATA/media_resource_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:52618/actuator/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3

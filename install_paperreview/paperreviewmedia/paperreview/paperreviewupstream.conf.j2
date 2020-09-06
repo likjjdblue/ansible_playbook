@@ -1,0 +1,4 @@
+upstream paperreview {
+    ip_hash;
+    {{ paperreview_nodes }}
+}

@@ -1,0 +1,17 @@
+version : '3.7'
+networks:
+  mty:
+    external: true
+services:
+  metasearch:
+    container_name: metasearch
+    hostname: metasearch
+    restart: always
+    image: registry.xinbeiting.com/xjy/metasearch:$tag_name
+    labels:
+      maintainers: "wenwen<lu.ziyong@trs.com.cn.com>"
+    network_mode: "host"
+    ports:
+      - 8650:8650
+    volumes:
+      - /TRS/LOGS/metasearch:/TRS/LOGS/metasearch

@@ -1,0 +1,111 @@
+- name: "获取当前GROUP 名"
+  run_once: true
+  set_fact:
+      currentGroupName: "{{ hostvars[item].group_names[0] }}"
+  loop: "{{ ansible_play_batch }}"
+- name: "打印组名"
+  run_once: true
+  debug:
+    msg: "当前 group name 是： {{ currentGroupName }}"
+
+- name: "创建相关目录"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /TRS/LOGS/log-center
+    - /TRS/CONFIG/YML
+
+- name: '生成docker-compose 文件'
+  copy:
+    src:  "{{ item }}"
+    dest: /TRS/CONFIG/YML
+  with_items:
+    - log-center.yml
+
+- name: '配置防火墙规则'
+  firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: true
+  with_items:
+    - 8658
+  ignore_errors: true
+
+
+- name: "获取后端 节点信息"
+  run_once: true
+  set_fact:
+    tmp_list: "{{ groups[currentGroupName] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list  }}"
+
+
+
+- name: "合成后端节点信息"
+  run_once: true
+  set_fact:
+    logCenter_nodes: "{{ tmp_list | map('regex_replace', '(.*)', 'server  \\1:8658 max_fails=1  fail_timeout=5s;') | join('\n    ') }}"
+
+- name: "创建nginx conf.d目录"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /etc/nginx/conf.d
+    - /etc/nginx/conf.d/upstream
+
+
+- name: 拷贝logCenter.conf配置文件
+  template:
+    src: "../../../logCentermedia/logCenter.conf.j2"
+    dest: "/etc/nginx/conf.d/logCenter.conf"
+
+
+- name: 拷贝logCenterupstream.conf配置文件
+  template:
+    src: "../../../logCentermedia/logCenterupstream.conf.j2"
+    dest: "/etc/nginx/conf.d/upstream/logCenterupstream.conf"
+
+#
+#
+#
+#- name: 创建临时安装目录
+#  file:
+#     path: "{{ INSTALL_TMP }}"
+#     state: directory
+#- name: 拷贝MySQL-python安装包
+#  copy:
+#     src: ../../../dsharemedia/MySQL-python-1.2.5-1.el7.x86_64.rpm
+#     dest: "{{ INSTALL_TMP }}"
+#- name: rpm包安装MySQL-python
+#  yum:
+#    name: "{{ INSTALL_TMP }}/MySQL-python-1.2.5-1.el7.x86_64.rpm"
+#    state: present
+#
+#
+#- name: 创建dshare数据库账号
+#  run_once: true
+#  mysql_db:
+#    name: "{{ dbname }}"
+#    state: present
+#    login_host: "{{ MysqlHost }}"
+#    login_user: "{{ DBAdminUser }}"
+#    login_password : "{{ DBAdminPasswd }}"
+#
+#- name: 创建dshare模块数据库账号
+#  run_once: true
+#  mysql_user:
+#    name: "{{ dbuser }}"
+#    password: "{{ dbpassword }}"
+#    login_host: "{{ MysqlHost }}"
+#    login_user: "{{ DBAdminUser }}"
+#    login_password : "{{ DBAdminPasswd }}"
+#    host: "%"
+#    priv: "{{ dbname }}.*:ALL"
+#    state: present
+#    update_password: always
+#  register: create_db_result
+#  ignore_errors: true
+
+- debug:
+    msg: "按需导入Docker 镜像 "
