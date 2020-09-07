@@ -22,7 +22,7 @@ def checkPortState(host='127.0.0.1',port=9200):
 
 
 def configFireallRule(port):
-  subprocess.call('firewall-cmd --zone=public --add-port=%s/tcp --permanent'%(str(port).split()),shell=True)
+  subprocess.call('firewall-cmd  --add-port=%s/tcp --permanent'%(str(port).split()),shell=True)
   subprocess.call('firewall-cmd --reload',shell=True)
 
 
