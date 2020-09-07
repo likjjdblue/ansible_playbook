@@ -56,8 +56,8 @@ with open(TmpSearchBasePath+'/../report/hardware_check_result_report.txt', mode=
       TmpHTMLContent+='<tr>%s<th>%s</th><th>%s</th>'%(TableRowBackgroundColorTag,TmpList[0],TmpList[1].replace(r'summary:',''))
       
       for subitem in TmpList[2:]:
-	 TmpItemName,TmpItemTargetValue,TmpItemRealValue,TmpItemDesc,TmpItemOther=subitem.split(':')
-         TmpHTMLContent+='<th>%s</th><th>%s</th><th>%s</th><th>%s</th>'%(ChineseNameMapping[TmpItemName],TmpItemTargetValue,TmpItemRealValue,TmpItemDesc)
+	    TmpItemName,TmpItemTargetValue,TmpItemRealValue,TmpItemDesc,TmpItemOther=subitem.split(':')
+        TmpHTMLContent+='<th>%s</th><th>%s</th><th>%s</th><th>%s</th>'%(ChineseNameMapping[TmpItemName],TmpItemTargetValue,TmpItemRealValue,TmpItemDesc)
       TmpHTMLContent+=r'</tr>'
 
 
