@@ -27,12 +27,11 @@ for basepath,dirs,files in os.walk(TmpSearchBasePath):
     TmpIPList.append(IPInfo)
      
     with open(TmpSearchBasePath+'/'+file, mode='r') as f:
-      TmpContent=f.read()
-    
-    if 'bad' in TmpContent:
-       TmpFaildResult.append(TmpContent)
-    else:
-       TmpPassedResult.append(TmpContent)
+      for  TmpContent in f:
+        if 'bad'  in TmpContent:
+          TmpFaildResult.append(TmpContent)
+        else:
+          TmpPassedResult.append(TmpContent)
      
 
 for item in TmpFaildResult+TmpPassedResult:
@@ -47,7 +46,12 @@ with open(TmpSearchBasePath+'/../report/port_check_result_report.txt', mode='r')
       TmpList=line.split()
       if not line:
          continue
-      TmpHTMLContent+='<tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th>'%(TmpList[1],TmpList[2],TmpList[3],TmpList[0].replace(r'summary:',''))
+
+      TableRowBackgroundColorTag=r'<tr style="background-color: white;">'
+      if '超时'  in  TmpList[0]:
+        TableRowBackgroundColorTag=r'<tr style="background-color: yellow;">'
+
+      TmpHTMLContent+='<tr>%s<th>%s</th><th>%s</th><th>%s</th><th>%s</th>'%(TableRowBackgroundColorTag,TmpList[1],TmpList[2],TmpList[3],TmpList[0].replace(r'summary:',''))
       
       TmpHTMLContent+=r'</tr>'
 

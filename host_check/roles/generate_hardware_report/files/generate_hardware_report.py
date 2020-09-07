@@ -48,10 +48,15 @@ with open(TmpSearchBasePath+'/../report/hardware_check_result_report.txt', mode=
       TmpList=line.split()
       if not line:
          continue
-      TmpHTMLContent+='<tr><th>%s</th><th>%s</th>'%(TmpList[0],TmpList[1].replace(r'summary:',''))
+
+      TableRowBackgroundColorTag=r'<tr style="background-color: white;">'
+      if '异常' in  TmpList[1]:
+        TableRowBackgroundColorTag=r'<tr style="background-color: yellow;">'
+
+      TmpHTMLContent+='<tr>%s<th>%s</th><th>%s</th>'%(TableRowBackgroundColorTag,TmpList[0],TmpList[1].replace(r'summary:',''))
       
       for subitem in TmpList[2:]:
-         TmpItemName,TmpItemTargetValue,TmpItemRealValue,TmpItemDesc,TmpItemOther=subitem.split(':')
+	 TmpItemName,TmpItemTargetValue,TmpItemRealValue,TmpItemDesc,TmpItemOther=subitem.split(':')
          TmpHTMLContent+='<th>%s</th><th>%s</th><th>%s</th><th>%s</th>'%(ChineseNameMapping[TmpItemName],TmpItemTargetValue,TmpItemRealValue,TmpItemDesc)
       TmpHTMLContent+=r'</tr>'
 
