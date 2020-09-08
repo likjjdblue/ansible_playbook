@@ -200,25 +200,25 @@ nginx		mas-cluster		8080
 nginx-cluster	mas			8080
 nginx-cluster	mas-cluster		8080
 
-nginx		ckm			8086
-nginx		ckm-cluster		8086
-nginx-cluster	ckm			8086
-nginx-cluster	ckm-cluster		8086
+nginx		ckm			8000
+nginx		ckm-cluster		8000
+nginx-cluster	ckm			8000
+nginx-cluster	ckm-cluster		8000
 
-nginx 		wechat			10086
-nginx 		wechar-cluster		10086
-nginx-cluster 	wechat			10086
-nginx-cluster 	wechat-cluster		10086
+nginx 		wechat			8081
+nginx 		wechar-cluster		8081
+nginx-cluster 	wechat			8081
+nginx-cluster 	wechat-cluster		8081
 
-nginx		weibo			8070
+nginx		trsweibo			8070
 nginx		weibo-cluster		8070
-nginx-cluster	weibo			8070
+nginx-cluster	trsweibo			8070
 nginx-cluster	weibo-cluster		8070
 
-nginx		iip			8081
-nginx		iip-cluster		8081
-nginx-cluster	iip			8081
-nginx-cluster	iip-cluster		8081
+nginx		iip			8080
+nginx		iip-cluster		8080
+nginx-cluster	iip			8080
+nginx-cluster	iip-cluster		8080
 
 nginx		igi			8082
 nginx		igi-cluster		8082
@@ -230,10 +230,10 @@ nginx		igs-cluster		8083
 nginx-cluster	igs			8083
 nginx-cluster	igs-cluster		8083
 
-nginx		ipm			8084
-nginx		ipm-cluster		8084
-nginx-cluster	ipm			8084
-nginx-cluster	ipm-cluster		8084
+nginx		ipm			8200
+nginx		ipm-cluster		8200
+nginx-cluster	ipm			8200
+nginx-cluster	ipm-cluster		8200
 
 nginx		rabbitmq		15672
 nginx		rabbitmq-cluster	15672
