@@ -1,0 +1,4 @@
+{
+  "insecure-registries" : ["10.81.11.44"],
+  "data-root": "/TRS/docker_data"
+}

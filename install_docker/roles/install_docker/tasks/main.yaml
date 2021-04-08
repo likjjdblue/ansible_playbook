@@ -1,0 +1,66 @@
+- name: "获取当前GROUP 名"
+  run_once: true
+  set_fact:
+      currentGroupName: "{{ hostvars[item].group_names[0] }}"
+  loop: "{{ ansible_play_batch }}"
+- name: "打印组名"
+  run_once: true
+  debug:
+    msg: "当前 group name 是： {{ currentGroupName }}"
+
+- name: "上传文件至目标服务器"
+  copy:
+    src:  "{{ item }}"
+    dest: /tmp
+  with_items:
+    - docker_rpm.tar.gz
+
+- name: "解压 Tar 压缩包"
+  shell: "tar -xvzf  docker_rpm.tar.gz"
+  args:
+    chdir: /tmp
+
+
+- name: "安装docker 依赖"
+  shell: "yum install -y yum-utils device-mapper-persistent-data lvm2"
+
+- name: "安装 Docker RPM"
+  shell: "yum localinstall *.rpm -y"
+  args:
+    chdir: /tmp/docker_rpm
+
+- name: "创建项目目录"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /TRS/docker_data
+    - /etc/docker
+
+- name: "上传Docker 配置文件至目标服务器"
+  copy:
+    src:  "{{ item }}"
+    dest: /etc/docker
+  with_items:
+    - daemon.json
+
+-  name: "重新加载Docker配置"
+   shell: "systemctl daemon-reload"
+
+- name: "启动docker"
+  shell: "systemctl enable docker;systemctl start docker"
+
+- name: "上传docker-compsoe"
+  copy:
+    src:  "{{ item }}"
+    dest: /usr/bin
+  with_items:
+    - docker-compose
+
+- name: "文件复权可执行"
+  shell: "chmod 777 /usr/bin/docker-compose"
+
+- debug:
+    msg: "{{ inventory_hostname }} 节点成功安装Docker"
+
+
